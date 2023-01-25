@@ -1,5 +1,5 @@
 var dog,sadDog,happyDog, database;
-var foodS,foodStock, foodStockVal;
+var foodS= 0,foodStock;
 var addFood;
 var foodObj;
 var fedTime;
@@ -19,7 +19,7 @@ function setup() {
 
   foodObj = new Food();
 
-  foodStock=database.ref('Food');
+  foodStock=database.ref('Comida');
   foodStock.on("value",readStock);
   
   dog=createSprite(800,200,150,150);
@@ -28,9 +28,9 @@ function setup() {
 
   //create feed the dog button here
 
-  feedDog=createButton("Feed the Dog");
-  feedDog.position(900,95);
-
+  feed=createButton("Feed the Dog");
+  feed.position(900,95);
+  feed.mousePressed(feedDog);
 
 
   addFood=createButton("Add Food");
@@ -49,6 +49,8 @@ function draw() {
   })
  
   //write code to display text lastFed time here
+  textSize(20)
+  fill(255,255,255)
   if(lastFed>=12){
     text("Last Feed : "+lastFed%12+"PM",350,30);
   }else if(lastFed==0){
@@ -71,7 +73,7 @@ function feedDog(){
   dog.addImage(happyDog);
 
   //write code here to update food stock and last fed time
-  foodStockVal = foodObj.getFoodStock()
+  var foodStockVal = foodObj.getFoodStock()
   if (foodStockVal <= 0 ){
     foodObj.updateFoodStock(foodStockVal*0)
   } 
